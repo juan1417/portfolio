@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://coding-space.vercel.app',
+  site: 'https://portfolio-kc171616s-juan1417s-projects.vercel.app',
   vite: {
     plugins: [tailwindcss()]
   },
