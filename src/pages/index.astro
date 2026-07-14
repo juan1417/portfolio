@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Stats from '../components/Stats.astro';
+import Projects from '../components/Projects.astro';
+import Experience from '../components/Experience.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  title="Juan Machado · Desarrollador & ML"
+  description="Estudiante de Ingeniería de Software en la Universidad Pascual Bravo. Full-stack developer con pasión por IA/ML y sistemas que escalan."
+>
+  <Header />
+  <main id="content">
+    <Hero />
+    <About />
+    <Stats />
+    <Projects />
+    <Experience />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.skill-tag').forEach((tag, i) => {
+    (tag as HTMLElement).style.animationDelay = (i * 0.03) + 's';
+  });
+</script>

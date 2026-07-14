@@ -1,0 +1,67 @@
+---
+import { t } from '../i18n/translations';
+
+const lang = Astro.url.searchParams.get('lang') || 'es';
+
+const experiences = [
+  {
+    titleKey: 'exp-1-title',
+    period: '2023 — Presente',
+    org: 'Universidad Pascual Bravo',
+    descKey: 'exp-1-desc'
+  },
+  {
+    titleKey: 'exp-2-title',
+    period: '2022 — Presente',
+    orgKey: 'exp-2-org',
+    descKey: 'exp-2-desc'
+  },
+  {
+    titleKey: 'exp-3-title',
+    period: '2022 — Presente',
+    orgKey: 'exp-3-org',
+    descKey: 'exp-3-desc'
+  }
+];
+
+const certs = [
+  { title: 'GitHub Pro', descKey: 'cert-1-desc' },
+  { title: 'Pair Extraordinaire', descKey: 'cert-2-desc' },
+  { title: 'Pull Shark', descKey: 'cert-3-desc' },
+  { title: 'YOLO', descKey: 'cert-4-desc' }
+];
+---
+
+<section class="section" id="experience">
+  <div class="container">
+    <div class="grid-2-1">
+      <div>
+        <p class="eyebrow" data-i18n="exp-eyebrow">{t(lang, 'exp-eyebrow')}</p>
+        <h2 data-i18n="exp-title">{t(lang, 'exp-title')}</h2>
+        <div style="margin-top: 32px;">
+          {experiences.map(exp => (
+            <div class="timeline-item">
+              <div class="row-between">
+                <h3 data-i18n={exp.titleKey}>{t(lang, exp.titleKey)}</h3>
+                <span class="meta">{exp.period}</span>
+              </div>
+              <p style="color: var(--muted); margin-top: 8px;">{exp.orgKey ? t(lang, exp.orgKey) : exp.org}</p>
+              <p style="color: var(--muted); margin-top: 4px;" data-i18n={exp.descKey}>{t(lang, exp.descKey)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow" data-i18n="certs-eyebrow">{t(lang, 'certs-eyebrow')}</p>
+        <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+          {certs.map(cert => (
+            <div class="card" style="padding: 20px;">
+              <h3 style="font-size: 16px;">{cert.title}</h3>
+              <p style="color: var(--muted); font-size: 14px; margin: 4px 0 0;" data-i18n={cert.descKey}>{t(lang, cert.descKey)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

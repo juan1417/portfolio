@@ -1,0 +1,55 @@
+---
+import { t } from '../i18n/translations';
+
+const lang = Astro.url.searchParams.get('lang') || 'es';
+const whatsappNumber = '57TU_NUMERO';
+const whatsappMessage = encodeURIComponent('Hola Juan, vi tu portafolio y me gustaría contactarte.');
+---
+
+<section class="section" id="contact" style="text-align: center;">
+  <div class="container" style="max-width: 600px;">
+    <p class="eyebrow" data-i18n="contact-eyebrow">{t(lang, 'contact-eyebrow')}</p>
+    <h2 data-i18n="contact-title">{t(lang, 'contact-title')}</h2>
+    <p class="lead" style="margin: 16px auto 32px;" data-i18n="contact-lead">{t(lang, 'contact-lead')}</p>
+    
+    <div class="contact-form" style="margin: 0 auto; text-align: left;">
+      <div class="field">
+        <label for="name" data-i18n="contact-name">{t(lang, 'contact-name')}</label>
+        <input type="text" id="name" class="input" data-i18n-placeholder="contact-name-ph" placeholder={t(lang, 'contact-name-ph')} />
+      </div>
+      <div class="field">
+        <label for="message" data-i18n="contact-msg">{t(lang, 'contact-msg')}</label>
+        <textarea id="message" class="textarea" data-i18n-placeholder="contact-msg-ph" placeholder={t(lang, 'contact-msg-ph')}></textarea>
+      </div>
+      <a 
+        href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary"
+        style="align-self: flex-start;"
+        data-i18n="contact-send"
+      >
+        {t(lang, 'contact-send')}
+      </a>
+    </div>
+
+    <div style="margin-top: 40px; display: flex; justify-content: center; gap: var(--gap-lg);">
+      <a href="https://github.com/juan1417" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/juanmachado1234" class="btn btn-secondary" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelector('.contact-form .btn-primary')?.addEventListener('click', (e) => {
+    const name = (document.getElementById('name') as HTMLInputElement)?.value || '';
+    const message = (document.getElementById('message') as HTMLTextAreaElement)?.value || '';
+    
+    const encodedName = encodeURIComponent(name);
+    const encodedMessage = encodeURIComponent(message);
+    
+    const whatsappUrl = `https://wa.me/57TU_NUMERO?text=Hola%20Juan%2C%20soy%20${encodedName}.%20${encodedMessage}`;
+    
+    (e.currentTarget as HTMLAnchorElement).href = whatsappUrl;
+  });
+</script>

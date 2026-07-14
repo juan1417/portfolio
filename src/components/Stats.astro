@@ -1,0 +1,25 @@
+---
+import { t } from '../i18n/translations';
+
+const lang = Astro.url.searchParams.get('lang') || 'es';
+
+const stats = [
+  { num: '17', key: 'stat-1' },
+  { num: '8+', key: 'stat-2' },
+  { num: '3', key: 'stat-3' },
+  { num: '2', key: 'stat-4' }
+];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="grid-4">
+      {stats.map(stat => (
+        <div class="stat">
+          <div class="stat-num num">{stat.num}</div>
+          <p class="stat-label" data-i18n={stat.key}>{t(lang, stat.key)}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

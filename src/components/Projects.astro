@@ -1,0 +1,162 @@
+---
+import { t } from '../i18n/translations';
+
+const lang = Astro.url.searchParams.get('lang') || 'es';
+
+const devProjects = [
+  {
+    pill: 'Full-Stack',
+    meta: 'Dart · Django · Flutter',
+    title: 'ProFinancas',
+    descKey: 'proj-1-desc',
+    tags: ['Django', 'Flutter', 'JWT', 'SQLite'],
+    url: 'https://github.com/juan1417/ProFinancas'
+  },
+  {
+    pill: 'Desktop',
+    meta: 'Python · PostgreSQL · PyQt',
+    title: 'Gestor de Inventario',
+    descKey: 'proj-2-desc',
+    tags: ['Python', 'PostgreSQL', 'PyQt', 'SQLAlchemy'],
+    url: 'https://github.com/juan1417/gestor-de-inventario'
+  },
+  {
+    pill: 'Lenguaje',
+    meta: 'C++',
+    title: 'Zeta',
+    descKey: 'proj-3-desc',
+    tags: ['C++', 'Compiler', 'DSL'],
+    url: 'https://github.com/juan1417/zeta'
+  },
+  {
+    pill: 'TUI',
+    meta: 'Python',
+    title: 'CalendarPy',
+    descKey: 'proj-4-desc',
+    tags: ['Python', 'Textual', 'TUI'],
+    url: 'https://github.com/juan1417/CalendarPy'
+  },
+  {
+    pill: 'Mobile',
+    meta: 'Dart · Flutter',
+    title: 'Storage-Manager',
+    descKey: 'proj-5-desc',
+    tags: ['Dart', 'Flutter', 'Mobile'],
+    url: 'https://github.com/juan1417/Storage-Manager'
+  },
+  {
+    pill: 'Web',
+    meta: 'JavaScript',
+    titleKey: 'proj-6-title',
+    descKey: 'proj-6-desc',
+    tags: ['JavaScript', 'k6', 'Testing'],
+    url: 'https://github.com/juan1417/Pruebas-de-Carga-y-Estr-s-con-k6'
+  }
+];
+
+const mlProjects = [
+  {
+    pill: 'ML',
+    meta: 'Python · scikit-learn',
+    titleKey: 'ml-1-title',
+    descKey: 'ml-1-desc',
+    tags: ['Python', 'scikit-learn', 'Pandas', 'Regresión'],
+    url: ''
+  },
+  {
+    pill: 'IA / LLM',
+    meta: 'Python',
+    titleKey: 'ml-2-title',
+    descKey: 'ml-2-desc',
+    tags: ['Python', 'LLM', 'Agents', 'NLP'],
+    url: 'https://github.com/juan1417/LLMtools'
+  },
+  {
+    pill: 'Herramienta',
+    meta: 'Python',
+    titleKey: 'ml-3-title',
+    descKey: 'ml-3-desc',
+    tags: ['Python', 'API', 'Automation'],
+    url: 'https://github.com/juan1417/Creator_cv'
+  }
+];
+---
+
+<section class="section" id="projects">
+  <div class="container stack" style="gap: 40px;">
+    <div style="max-width: 36ch;">
+      <p class="eyebrow fade-up" data-i18n="projects-eyebrow">{t(lang, 'projects-eyebrow')}</p>
+      <h2 class="fade-up fade-up-delay-1" data-i18n="projects-title">{t(lang, 'projects-title')}</h2>
+    </div>
+    <div class="tabs fade-up fade-up-delay-2">
+      <button class="tab-btn active" data-tab="desarrollo" data-i18n="tab-dev">{t(lang, 'tab-dev')}</button>
+      <button class="tab-btn" data-tab="ml" data-i18n="tab-ml">{t(lang, 'tab-ml')}</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-desarrollo">
+      <div class="grid-2">
+        {devProjects.map((proj, i) => (
+          <div class={`project-card fade-up fade-up-delay-${i % 4}`}>
+            <div class="row-between" style="margin-bottom: 12px;">
+              <span class="pill">{proj.pill}</span>
+              <span class="meta">{proj.meta}</span>
+            </div>
+            <h3>{proj.titleKey ? t(lang, proj.titleKey) : proj.title}</h3>
+            <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
+            <div class="project-tags">
+              {proj.tags.map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            {proj.url && (
+              <a href={proj.url} class="btn btn-ghost btn-arrow" style="margin-top: 16px; padding-left: 0;" target="_blank" rel="noopener" data-i18n="view-repo">{t(lang, 'view-repo')}</a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-ml">
+      <div class="grid-2">
+        {mlProjects.map((proj, i) => (
+          <div class={`project-card fade-up fade-up-delay-${i % 4}`}>
+            <div class="row-between" style="margin-bottom: 12px;">
+              <span class="pill">{proj.pill}</span>
+              <span class="meta">{proj.meta}</span>
+            </div>
+            <h3>{proj.titleKey ? t(lang, proj.titleKey) : proj.title}</h3>
+            <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
+            <div class="project-tags">
+              {proj.tags.map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            {proj.url && (
+              <a href={proj.url} class="btn btn-ghost btn-arrow" style="margin-top: 16px; padding-left: 0;" target="_blank" rel="noopener" data-i18n="view-repo">{t(lang, 'view-repo')}</a>
+            )}
+          </div>
+        ))}
+      </div>
+      <div class="card fade-up fade-up-delay-3" style="text-align: center; padding: 40px; margin-top: var(--gap-lg);">
+        <p style="color: var(--muted); margin: 0;" data-i18n="ml-learning" set:html={t(lang, 'ml-learning')}></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = (btn as HTMLButtonElement).dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + tab)?.classList.add('active');
+      document.getElementById('tab-' + tab)?.querySelectorAll('.fade-up').forEach(el => {
+        el.classList.remove('visible');
+        void (el as HTMLElement).offsetWidth;
+        el.classList.add('visible');
+      });
+    });
+  });
+</script>

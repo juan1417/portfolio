@@ -1,0 +1,12 @@
+---
+import { t } from '../i18n/translations';
+
+const lang = Astro.url.searchParams.get('lang') || 'es';
+---
+
+<footer class="pagefoot">
+  <div class="container row-between">
+    <span>© 2026 Juan Machado · CodingSpace</span>
+    <span class="meta" data-i18n="footer-tagline">{t(lang, 'footer-tagline')}</span>
+  </div>
+</footer>
