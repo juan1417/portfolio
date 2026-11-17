@@ -1,6 +1,6 @@
 # UI kit refinement — surgical upgrade of the Astro portfolio
 
-Branch: `ui/kit-improvement`. Delivery: work-unit commits; test runner: `npm run build` + generated HTML inspection (no test framework in repo). Work unit: `5e64f2b` (feat(ui): integrate astro-component-kit and harden accessibility), 396 authored changed lines; docs recorded in follow-up commit.
+Branch: `ui/kit-improvement`. Delivery: work-unit commits; test runner: `npm run build` + generated HTML inspection (no test framework in repo). Work unit: `5e64f2b` (feat(ui): integrate astro-component-kit and harden accessibility), 396 authored changed lines; docs recorded in follow-up commit. Native assessment over the committed slice (`22db186..HEAD`): tier `medium`, `review_due=false`, reason `under_budget` (configuration change in `package-lock.json`); no native review started.
 
 ## Specs
 
