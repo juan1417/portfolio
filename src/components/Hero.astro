@@ -1,5 +1,6 @@
 ---
 import { t } from '../i18n/translations';
+import { MinimalPillButton } from 'astro-component-kit/buttons';
 
 const lang = Astro.url.searchParams.get('lang') || 'es';
 ---
@@ -10,8 +11,12 @@ const lang = Astro.url.searchParams.get('lang') || 'es';
     <h1 data-i18n="hero-title">{t(lang, 'hero-title')}</h1>
     <p class="lead" data-i18n="hero-lead">{t(lang, 'hero-lead')}</p>
     <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary" data-i18n="hero-cta-1">{t(lang, 'hero-cta-1')}</a>
-      <a href="#contact" class="btn btn-secondary" data-i18n="hero-cta-2">{t(lang, 'hero-cta-2')}</a>
+      <MinimalPillButton href="#projects" variant="secondary" size="lg">
+        <span data-i18n="hero-cta-1">{t(lang, 'hero-cta-1')}</span>
+      </MinimalPillButton>
+      <MinimalPillButton href="#contact" variant="primary" size="lg">
+        <span data-i18n="hero-cta-2">{t(lang, 'hero-cta-2')}</span>
+      </MinimalPillButton>
     </div>
   </div>
 </section>
