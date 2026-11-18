@@ -1,5 +1,6 @@
 ---
 import { t } from '../i18n/translations';
+import { Badge } from 'astro-component-kit/feedback';
 
 const lang = Astro.url.searchParams.get('lang') || 'es';
 
@@ -86,14 +87,34 @@ const mlProjects = [
   <div class="container stack" style="gap: 40px;">
     <div style="max-width: 36ch;">
       <p class="eyebrow fade-up" data-i18n="projects-eyebrow">{t(lang, 'projects-eyebrow')}</p>
-      <h2 class="fade-up fade-up-delay-1" data-i18n="projects-title">{t(lang, 'projects-title')}</h2>
+      <h2 id="projects-title" class="fade-up fade-up-delay-1" data-i18n="projects-title">{t(lang, 'projects-title')}</h2>
     </div>
-    <div class="tabs fade-up fade-up-delay-2">
-      <button class="tab-btn active" data-tab="desarrollo" data-i18n="tab-dev">{t(lang, 'tab-dev')}</button>
-      <button class="tab-btn" data-tab="ml" data-i18n="tab-ml">{t(lang, 'tab-ml')}</button>
+    <div class="tabs fade-up fade-up-delay-2" role="tablist" aria-labelledby="projects-title">
+      <button
+        class="tab-btn"
+        id="tab-btn-desarrollo"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tab-desarrollo"
+        tabindex="0"
+        data-tab="desarrollo"
+        data-i18n="tab-dev"
+      >{t(lang, 'tab-dev')}</button>
+      <button
+        class="tab-btn"
+        id="tab-btn-ml"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-ml"
+        tabindex="-1"
+        data-tab="ml"
+        data-i18n="tab-ml"
+      >{t(lang, 'tab-ml')}</button>
     </div>
 
-    <div class="tab-panel active" id="tab-desarrollo">
+    <div class="tab-panel" id="tab-desarrollo" role="tabpanel" aria-labelledby="tab-btn-desarrollo" tabindex="0">
       <div class="grid-2">
         {devProjects.map((proj, i) => (
           <div class={`project-card fade-up fade-up-delay-${i % 4}`}>
@@ -105,7 +126,7 @@ const mlProjects = [
             <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
             <div class="project-tags">
               {proj.tags.map(tag => (
-                <span class="tag">{tag}</span>
+                <Badge>{tag}</Badge>
               ))}
             </div>
             {proj.url && (
@@ -116,7 +137,7 @@ const mlProjects = [
       </div>
     </div>
 
-    <div class="tab-panel" id="tab-ml">
+    <div class="tab-panel" id="tab-ml" role="tabpanel" aria-labelledby="tab-btn-ml" tabindex="0" hidden>
       <div class="grid-2">
         {mlProjects.map((proj, i) => (
           <div class={`project-card fade-up fade-up-delay-${i % 4}`}>
@@ -128,7 +149,7 @@ const mlProjects = [
             <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
             <div class="project-tags">
               {proj.tags.map(tag => (
-                <span class="tag">{tag}</span>
+                <Badge>{tag}</Badge>
               ))}
             </div>
             {proj.url && (
@@ -145,18 +166,44 @@ const mlProjects = [
 </section>
 
 <script>
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = (btn as HTMLButtonElement).dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + tab)?.classList.add('active');
-      document.getElementById('tab-' + tab)?.querySelectorAll('.fade-up').forEach(el => {
-        el.classList.remove('visible');
-        void (el as HTMLElement).offsetWidth;
-        el.classList.add('visible');
-      });
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('#projects [role="tab"]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('#projects [role="tabpanel"]'));
+
+  function activateTab(tab: HTMLButtonElement, moveFocus = false) {
+    const tabName = tab.dataset.tab;
+
+    tabs.forEach(candidate => {
+      const selected = candidate === tab;
+      candidate.setAttribute('aria-selected', String(selected));
+      candidate.tabIndex = selected ? 0 : -1;
+    });
+
+    panels.forEach(panel => {
+      panel.hidden = panel.id !== `tab-${tabName}`;
+    });
+
+    if (moveFocus) tab.focus();
+
+    document.getElementById(`tab-${tabName}`)?.querySelectorAll<HTMLElement>('.fade-up').forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth;
+      el.classList.add('visible');
+    });
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateTab(tab));
+
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+
+      event.preventDefault();
+      let nextIndex = index;
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+      activateTab(tabs[nextIndex], true);
     });
   });
 </script>

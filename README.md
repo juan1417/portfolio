@@ -1,43 +1,41 @@
-# Astro Starter Kit: Minimal
+# Juan Machado — Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal portfolio built with Astro, Tailwind CSS 4, and a small set of accessible components from [astro-component-kit](https://astrocomponents.dev/). The site is bilingual (Spanish/English) and uses a dark green palette.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Requirements
 
-## 🚀 Project Structure
+- Node.js 22.12 or newer
+- npm
 
-Inside of your Astro project, you'll see the following folders and files:
+## Commands
+
+| Command | Action |
+| :-- | :-- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start the dev server at `http://localhost:4321` |
+| `npm run build` | Build the production site into `./dist/` |
+| `npm run preview` | Preview the production build locally |
+
+## Project structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+├── components/     Page sections and UI pieces (Hero, Projects, Contact, ...)
+├── i18n/           Translation strings
+├── layouts/        Global document shell
+├── pages/          Routes (index.astro)
+└── styles/         Design tokens and global styles
+odd/tasks/          Organic Driven Development feature documents
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Notes
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Language switching
 
-Any static assets, like images, can be placed in the `public/` directory.
+`?lang=en` sets the initial language. The toggle in the header saves the choice to `localStorage` and updates every element marked with `data-i18n` or `data-i18n-placeholder`. Elements whose text comes from a kit component keep the translated string in a nested `<span data-i18n="...">`, because kit components do not forward arbitrary attributes to their root element.
 
-## 🧞 Commands
+### Component kit theming
 
-All commands are run from the root of the project, from a terminal:
+Only selected components are imported from `astro-component-kit` (category imports such as `astro-component-kit/buttons` and `astro-component-kit/feedback`). The kit's `global.css` is intentionally **not** imported: its reset, external fonts, and 1400px container conflict with this project. Instead, the kit design tokens are aliased to the project palette in `src/styles/global.css` under `:root`. A few kit styles use literal indigo values, so those are remapped to `--accent` in the same stylesheet.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Before deploying, replace the `57TU_NUMERO` placeholder in `src/components/Contact.astro`. It is defined once as `whatsappNumber` and passed to the client script through `data-whatsapp-number`.

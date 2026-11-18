@@ -36,8 +36,4 @@ import Footer from '../components/Footer.astro';
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  document.querySelectorAll('.skill-tag').forEach((tag, i) => {
-    (tag as HTMLElement).style.animationDelay = (i * 0.03) + 's';
-  });
 </script>

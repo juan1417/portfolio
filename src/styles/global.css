@@ -33,7 +33,26 @@
 
   --radius: 6px;
   --radius-lg: 10px;
+
+  /* astro-component-kit tokens mapped to this project's palette */
+  --c-primary:       var(--accent);
+  --c-primary-light: var(--accent);
+  --c-primary-glow:  var(--accent-soft);
+  --c-text-1:        var(--fg);
+  --c-text-2:        var(--muted);
+  --c-text-3:        var(--muted);
+  --c-border:        var(--border);
+  --c-bg:            var(--bg);
+  --c-bg-1:          var(--bg);
+  --c-bg-2:          var(--surface);
+  --c-surface:       var(--surface);
+  --font-sans:       var(--font-body);
+  --r-full:          9999px;
 }
+
+/* The kit ships literal indigo shadows in a few places; remap them to the project accent. */
+.hero .hero-center .hero-cta a.pill-btn--secondary { box-shadow: 0 4px 12px var(--accent-soft); }
+.hero .hero-center .hero-cta a.pill-btn--secondary:hover { box-shadow: 0 6px 16px var(--accent-soft); }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -67,12 +86,10 @@ h1, h2, h3, h4 { text-wrap: balance; }
 .row { display: flex; align-items: center; gap: var(--gap-md); }
 .row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-md); }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-lg); }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-lg); }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap-md); }
 .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap-xl); align-items: start; }
-.grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: var(--gap-xl); align-items: start; }
 @media (max-width: 920px) {
-  .grid-2, .grid-3, .grid-4, .grid-2-1, .grid-1-2 { grid-template-columns: 1fr; }
+  .grid-2, .grid-4, .grid-2-1 { grid-template-columns: 1fr; }
 }
 
 .h1, h1 { font-family: var(--font-display); font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -0.02em; margin: 0; }
@@ -130,20 +147,6 @@ h1, h2, h3, h4 { text-wrap: balance; }
   border-radius: var(--radius-lg);
   padding: 28px;
 }
-.card-flat { background: transparent; border: 0; padding: 0; }
-.card-rule { background: transparent; border: 0; border-top: 1px solid var(--fg); padding: 24px 0 0; border-radius: 0; }
-
-.feature .feature-mark {
-  width: 36px; height: 36px;
-  display: grid; place-items: center;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--accent);
-  margin-bottom: var(--gap-md);
-}
-.feature .feature-mark svg { width: 18px; height: 18px; }
-.feature h3 { margin-bottom: 6px; }
-.feature p  { margin: 0; color: var(--muted); font-size: 15px; }
 
 .stat .stat-num {
   font-family: var(--font-display);
@@ -195,32 +198,6 @@ h1, h2, h3, h4 { text-wrap: balance; }
 }
 .textarea { min-height: 96px; resize: vertical; line-height: 1.55; }
 
-.ds-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.ds-table th, .ds-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
-.ds-table th { color: var(--muted); font-weight: 500; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
-.ds-table tbody tr:hover { background: var(--fg-soft); }
-.ds-table .num-col { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
-
-.ph-img {
-  background:
-    linear-gradient(135deg, var(--accent-soft), var(--fg-soft)),
-    var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  aspect-ratio: 16 / 10;
-  display: grid; place-items: center;
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-}
-.ph-img.square    { aspect-ratio: 1 / 1; }
-.ph-img.portrait  { aspect-ratio: 3 / 4; }
-.ph-img.wide      { aspect-ratio: 16 / 9; }
-
-.rule  { border: 0; border-top: 1px solid var(--border); margin: 0; }
-.rule-strong { border: 0; border-top: 1px solid var(--fg); margin: 0; }
-
 .hero          { padding-block: clamp(80px, 12vw, 160px); }
 .hero-center   { text-align: center; max-width: 800px; margin-inline: auto; }
 .hero h1       { margin-bottom: var(--gap-md); font-size: clamp(40px, 7vw, 80px); }
@@ -232,20 +209,21 @@ h1, h2, h3, h4 { text-wrap: balance; }
   .hero h1 { font-size: 36px; }
   .hero .lead { font-size: 16px; }
 }
-.hero-split    { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-2xl); align-items: center; }
-@media (max-width: 920px) { .hero-split { grid-template-columns: 1fr; } }
-
-.log-row { display: grid; grid-template-columns: 120px 1fr 100px; gap: var(--gap-lg); padding: 22px 0; border-top: 1px solid var(--border); align-items: baseline; }
-.log-row .meta { color: var(--muted); }
-.log-row h3 { font-size: 19px; }
-.log-row .pull { text-align: right; }
+.hero .eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 8px;
+}
 
 .project-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 28px;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.2s ease;
 }
 .project-card:hover { border-color: var(--accent); }
 .project-card h3 { margin-bottom: 8px; }
@@ -284,56 +262,11 @@ h1, h2, h3, h4 { text-wrap: balance; }
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 .tab-btn:hover { color: var(--fg); }
-.tab-btn.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.tab-btn[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-panel[hidden] { display: none; }
 
-.fade-up {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.fade-up-delay-1 { transition-delay: 0.08s; }
-.fade-up-delay-2 { transition-delay: 0.16s; }
-.fade-up-delay-3 { transition-delay: 0.24s; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-.hero .eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  margin-right: 8px;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-.skill-tag {
-  opacity: 0;
-  transform: translateY(8px);
-  animation: skill-in 0.3s ease forwards;
-}
-@keyframes skill-in {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.project-card {
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-.project-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px oklch(0% 0 0 / 0.3);
-}
+/* Content is visible by default: no JS or reduced motion must never hide it. */
+.fade-up { opacity: 1; transform: none; }
 
 .lang-toggle {
   display: inline-flex;
@@ -361,4 +294,50 @@ h1, h2, h3, h4 { text-wrap: balance; }
 .lang-toggle button:hover:not(.active) {
   background: var(--fg-soft);
   color: var(--fg);
+}
+
+/* Motion is opt-in: declare it only when the user has not asked to reduce it. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .hero .eyebrow::before { animation: pulse-dot 2s ease-in-out infinite; }
+
+  @keyframes skill-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .js .skill-tag {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: skill-in 0.3s ease forwards;
+  }
+
+  .js .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .js .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .js .fade-up-delay-1 { transition-delay: 0.08s; }
+  .js .fade-up-delay-2 { transition-delay: 0.16s; }
+  .js .fade-up-delay-3 { transition-delay: 0.24s; }
+
+  .project-card {
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px oklch(0% 0 0 / 0.3);
+  }
+}
+
+/* Third-party kit transitions and any remaining animation are flattened here. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
