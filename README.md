@@ -1,6 +1,6 @@
 # Juan Machado — Portfolio
 
-Personal portfolio built with Astro, Tailwind CSS 4, and a small set of accessible components from [astro-component-kit](https://astrocomponents.dev/). The site is bilingual (Spanish/English) and uses a dark green palette.
+Personal portfolio built with Astro, Tailwind CSS 4, and a small set of accessible components from [astro-component-kit](https://astrocomponents.dev/). The site is bilingual (Spanish/English) and uses a refined green-tinted neutral palette.
 
 ## Requirements
 
@@ -29,6 +29,14 @@ odd/tasks/          Organic Driven Development feature documents
 ```
 
 ## Notes
+
+### Visual hierarchy
+
+Sections share one `SectionHeading` component that renders a numbering index (`01`–`04`), an `<h2>`, and a short bilingual intro (`src/components/SectionHeading.astro`). The hero uses a two-column layout with a facts panel; technologies are grouped into four labelled categories in About; projects are `<article>` cards in a responsive grid; experience is a timeline plus a certification list; and the contact form sits in a card beside the intro.
+
+### Design tokens
+
+The palette lives as semantic custom properties in `src/styles/global.css`: a green-tinted neutral ramp (`--bg`, `--surface`, `--surface-2`, `--fg`, `--muted`, `--border`) plus a single accent (`--accent`) and its readable ink (`--accent-ink`). Derived values use `color-mix()`. Components must not declare literal hex colors or inline `style` attributes; add a token or a class instead. Motion is opt-in under `prefers-reduced-motion: no-preference`, and content stays visible by default.
 
 ### Language switching
 
