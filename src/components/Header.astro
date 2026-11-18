@@ -4,6 +4,8 @@ import { t } from '../i18n/translations';
 const lang = Astro.url.searchParams.get('lang') || 'es';
 ---
 
+<a class="skip-link" href="#content" data-i18n="skip-link">{t(lang, 'skip-link')}</a>
+
 <header class="topnav">
   <div class="container topnav-inner">
     <span class="logo">CodingSpace</span>
