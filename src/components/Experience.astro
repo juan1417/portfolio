@@ -1,5 +1,6 @@
 ---
 import { t } from '../i18n/translations';
+import SectionHeading from './SectionHeading.astro';
 
 const lang = Astro.url.searchParams.get('lang') || 'es';
 
@@ -34,33 +35,32 @@ const certs = [
 
 <section class="section" id="experience">
   <div class="container">
+    <SectionHeading index="03" titleKey="exp-title" introKey="exp-intro" headingId="experience-title" />
+
     <div class="grid-2-1">
-      <div>
-        <p class="eyebrow" data-i18n="exp-eyebrow">{t(lang, 'exp-eyebrow')}</p>
-        <h2 data-i18n="exp-title">{t(lang, 'exp-title')}</h2>
-        <div style="margin-top: 32px;">
-          {experiences.map(exp => (
-            <div class="timeline-item">
-              <div class="row-between">
-                <h3 data-i18n={exp.titleKey}>{t(lang, exp.titleKey)}</h3>
-                <span class="meta">{exp.period}</span>
-              </div>
-              <p style="color: var(--muted); margin-top: 8px;">{exp.orgKey ? t(lang, exp.orgKey) : exp.org}</p>
-              <p style="color: var(--muted); margin-top: 4px;" data-i18n={exp.descKey}>{t(lang, exp.descKey)}</p>
+      <ol class="timeline">
+        {experiences.map(exp => (
+          <li class="timeline-item">
+            <div class="row-between">
+              <h3 data-i18n={exp.titleKey}>{t(lang, exp.titleKey)}</h3>
+              <span class="meta">{exp.period}</span>
             </div>
-          ))}
-        </div>
-      </div>
+            <p class="org">{exp.orgKey ? t(lang, exp.orgKey) : exp.org}</p>
+            <p data-i18n={exp.descKey}>{t(lang, exp.descKey)}</p>
+          </li>
+        ))}
+      </ol>
+
       <div>
-        <p class="eyebrow" data-i18n="certs-eyebrow">{t(lang, 'certs-eyebrow')}</p>
-        <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <h3 class="certs-title" data-i18n="certs-eyebrow">{t(lang, 'certs-eyebrow')}</h3>
+        <ul class="cert-list">
           {certs.map(cert => (
-            <div class="card" style="padding: 20px;">
-              <h3 style="font-size: 16px;">{cert.title}</h3>
-              <p style="color: var(--muted); font-size: 14px; margin: 4px 0 0;" data-i18n={cert.descKey}>{t(lang, cert.descKey)}</p>
-            </div>
+            <li class="cert-item">
+              <h4>{cert.title}</h4>
+              <p data-i18n={cert.descKey}>{t(lang, cert.descKey)}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   </div>
