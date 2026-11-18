@@ -1,31 +1,50 @@
 ---
 import { t } from '../i18n/translations';
+import SectionHeading from './SectionHeading.astro';
 
 const lang = Astro.url.searchParams.get('lang') || 'es';
 
-const skills = [
-  'Python', 'TypeScript', 'JavaScript', 'Java', 'C#', 'Dart', 'C++', 'PHP',
-  'React', 'Vue.js', 'Django', 'FastAPI', 'Flask', 'Laravel', 'Astro',
-  'TailwindCSS', 'PostgreSQL', 'MySQL', 'SQLite', 'AWS', 'Azure', 'Vercel', 'Docker'
+const skillGroups = [
+  {
+    labelKey: 'skill-languages',
+    skills: ['Python', 'TypeScript', 'JavaScript', 'Java', 'C#', 'Dart', 'C++', 'PHP']
+  },
+  {
+    labelKey: 'skill-frontend',
+    skills: ['React', 'Vue.js', 'Astro', 'TailwindCSS']
+  },
+  {
+    labelKey: 'skill-backend',
+    skills: ['Django', 'FastAPI', 'Flask', 'Laravel']
+  },
+  {
+    labelKey: 'skill-data-cloud',
+    skills: ['PostgreSQL', 'MySQL', 'SQLite', 'AWS', 'Azure', 'Vercel', 'Docker']
+  }
 ];
 ---
 
 <section class="section" id="about">
   <div class="container">
+    <SectionHeading index="01" titleKey="about-title" introKey="about-intro" headingId="about-title" />
+
     <div class="grid-2-1">
-      <div>
-        <p class="eyebrow" data-i18n="about-eyebrow">{t(lang, 'about-eyebrow')}</p>
-        <h2 data-i18n="about-title">{t(lang, 'about-title')}</h2>
-        <p class="lead" style="margin-top: 16px;" data-i18n="about-text-1">{t(lang, 'about-text-1')}</p>
-        <p style="margin-top: 16px; color: var(--muted);" data-i18n="about-text-2">{t(lang, 'about-text-2')}</p>
+      <div class="stack">
+        <p data-i18n="about-text-1">{t(lang, 'about-text-1')}</p>
+        <p data-i18n="about-text-2">{t(lang, 'about-text-2')}</p>
       </div>
-      <div>
-        <p class="eyebrow" data-i18n="stack-eyebrow">{t(lang, 'stack-eyebrow')}</p>
-        <div class="skill-grid" style="margin-top: 16px;">
-          {skills.map((skill, i) => (
-            <span class="skill-tag" style={`animation-delay: ${i * 0.03}s`}>{skill}</span>
-          ))}
-        </div>
+
+      <div class="skill-groups">
+        {skillGroups.map(group => (
+          <div class="skill-group">
+            <h3 data-i18n={group.labelKey}>{t(lang, group.labelKey)}</h3>
+            <div class="skill-grid">
+              {group.skills.map(skill => (
+                <span class="skill-tag">{skill}</span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </div>

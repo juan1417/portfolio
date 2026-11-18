@@ -1,6 +1,7 @@
 ---
 import { t } from '../i18n/translations';
 import { Badge } from 'astro-component-kit/feedback';
+import SectionHeading from './SectionHeading.astro';
 
 const lang = Astro.url.searchParams.get('lang') || 'es';
 
@@ -84,11 +85,15 @@ const mlProjects = [
 ---
 
 <section class="section" id="projects">
-  <div class="container stack" style="gap: 40px;">
-    <div style="max-width: 36ch;">
-      <p class="eyebrow fade-up" data-i18n="projects-eyebrow">{t(lang, 'projects-eyebrow')}</p>
-      <h2 id="projects-title" class="fade-up fade-up-delay-1" data-i18n="projects-title">{t(lang, 'projects-title')}</h2>
-    </div>
+  <div class="container">
+    <SectionHeading
+      index="02"
+      titleKey="projects-title"
+      introKey="projects-intro"
+      headingId="projects-title"
+      headingClass="fade-up fade-up-delay-1"
+    />
+
     <div class="tabs fade-up fade-up-delay-2" role="tablist" aria-labelledby="projects-title">
       <button
         class="tab-btn"
@@ -115,51 +120,59 @@ const mlProjects = [
     </div>
 
     <div class="tab-panel" id="tab-desarrollo" role="tabpanel" aria-labelledby="tab-btn-desarrollo" tabindex="0">
-      <div class="grid-2">
+      <ul class="project-grid">
         {devProjects.map((proj, i) => (
-          <div class={`project-card fade-up fade-up-delay-${i % 4}`}>
-            <div class="row-between" style="margin-bottom: 12px;">
-              <span class="pill">{proj.pill}</span>
-              <span class="meta">{proj.meta}</span>
-            </div>
-            <h3>{proj.titleKey ? t(lang, proj.titleKey) : proj.title}</h3>
-            <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
-            <div class="project-tags">
-              {proj.tags.map(tag => (
-                <Badge>{tag}</Badge>
-              ))}
-            </div>
-            {proj.url && (
-              <a href={proj.url} class="btn btn-ghost btn-arrow" style="margin-top: 16px; padding-left: 0;" target="_blank" rel="noopener" data-i18n="view-repo">{t(lang, 'view-repo')}</a>
-            )}
-          </div>
+          <li>
+            <article class={`project-card fade-up fade-up-delay-${i % 4}`}>
+              <div class="project-card-header">
+                <span class="pill">{proj.pill}</span>
+                <span class="meta">{proj.meta}</span>
+              </div>
+              <div>
+                <h3>{proj.titleKey ? t(lang, proj.titleKey) : proj.title}</h3>
+                <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
+              </div>
+              <div class="project-card-footer">
+                <div class="project-tags">
+                  {proj.tags.map(tag => <Badge>{tag}</Badge>)}
+                </div>
+                {proj.url && (
+                  <a href={proj.url} class="card-link" target="_blank" rel="noopener" data-i18n="view-repo">{t(lang, 'view-repo')}</a>
+                )}
+              </div>
+            </article>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
 
     <div class="tab-panel" id="tab-ml" role="tabpanel" aria-labelledby="tab-btn-ml" tabindex="0" hidden>
-      <div class="grid-2">
+      <ul class="project-grid">
         {mlProjects.map((proj, i) => (
-          <div class={`project-card fade-up fade-up-delay-${i % 4}`}>
-            <div class="row-between" style="margin-bottom: 12px;">
-              <span class="pill">{proj.pill}</span>
-              <span class="meta">{proj.meta}</span>
-            </div>
-            <h3>{proj.titleKey ? t(lang, proj.titleKey) : proj.title}</h3>
-            <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
-            <div class="project-tags">
-              {proj.tags.map(tag => (
-                <Badge>{tag}</Badge>
-              ))}
-            </div>
-            {proj.url && (
-              <a href={proj.url} class="btn btn-ghost btn-arrow" style="margin-top: 16px; padding-left: 0;" target="_blank" rel="noopener" data-i18n="view-repo">{t(lang, 'view-repo')}</a>
-            )}
-          </div>
+          <li>
+            <article class={`project-card fade-up fade-up-delay-${i % 4}`}>
+              <div class="project-card-header">
+                <span class="pill">{proj.pill}</span>
+                <span class="meta">{proj.meta}</span>
+              </div>
+              <div>
+                <h3>{proj.titleKey ? t(lang, proj.titleKey) : proj.title}</h3>
+                <p data-i18n={proj.descKey}>{t(lang, proj.descKey)}</p>
+              </div>
+              <div class="project-card-footer">
+                <div class="project-tags">
+                  {proj.tags.map(tag => <Badge>{tag}</Badge>)}
+                </div>
+                {proj.url && (
+                  <a href={proj.url} class="card-link" target="_blank" rel="noopener" data-i18n="view-repo">{t(lang, 'view-repo')}</a>
+                )}
+              </div>
+            </article>
+          </li>
         ))}
-      </div>
-      <div class="card fade-up fade-up-delay-3" style="text-align: center; padding: 40px; margin-top: var(--gap-lg);">
-        <p style="color: var(--muted); margin: 0;" data-i18n="ml-learning" set:html={t(lang, 'ml-learning')}></p>
+      </ul>
+      <div class="card ml-note fade-up fade-up-delay-3">
+        <p data-i18n="ml-learning" set:html={t(lang, 'ml-learning')}></p>
       </div>
     </div>
   </div>
