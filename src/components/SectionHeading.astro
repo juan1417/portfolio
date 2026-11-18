@@ -1,0 +1,22 @@
+---
+import { t } from '../i18n/translations';
+
+interface Props {
+  index: string;
+  titleKey: string;
+  introKey: string;
+  headingId?: string;
+  headingClass?: string;
+}
+
+const { index, titleKey, introKey, headingId, headingClass = '' } = Astro.props;
+const lang = Astro.url.searchParams.get('lang') || 'es';
+---
+
+<div class="section-heading">
+  <span class="section-index" aria-hidden="true">{index}</span>
+  <div>
+    <h2 id={headingId} class={headingClass} data-i18n={titleKey}>{t(lang, titleKey)}</h2>
+    <p class="section-intro" data-i18n={introKey}>{t(lang, introKey)}</p>
+  </div>
+</div>
